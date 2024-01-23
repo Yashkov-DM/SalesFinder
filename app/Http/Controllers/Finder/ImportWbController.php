@@ -6,11 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Stock;
 use App\Services\Contracts\ImportServiceInterface;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use JsonSerializable;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ImportWbController extends Controller
@@ -25,8 +21,6 @@ class ImportWbController extends Controller
     {
         $validated = Validator::make($request->all(), [
             'dateFrom' => ['required', 'date_format:Y-m-d'],
-            'perPage' => ['required', 'integer'],
-            'page' => ['required', 'integer']
         ]);
 
         if(!$validated->fails()) {
@@ -35,8 +29,9 @@ class ImportWbController extends Controller
             return response()->json(['messages' => $validated->errors()->getMessages()]);
         }
 
-        $stockList = Stock::query()->paginate($validated->getData()['perPage'], page: $validated->getData()['page']);
+        $stockList = Stock::query()->paginate(15);
 
         return response()->json($stockList->toJson(JSON_UNESCAPED_UNICODE));
     }
 }
+

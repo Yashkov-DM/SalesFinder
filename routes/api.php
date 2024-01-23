@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Finder\ImportWbController;
 use App\Http\Controllers\Finder\OfferPriceController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Finder\StockController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
 
 //Finder routes
 Route::get('import', ImportWbController::class)->name('api.import');
 Route::post('offered-price', OfferPriceController::class)->name('api.offered-price');
+Route::get('stock', [StockController::class, 'index'])->name('api.stock');

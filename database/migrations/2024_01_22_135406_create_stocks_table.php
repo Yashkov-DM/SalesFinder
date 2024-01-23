@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('subject');
             $table->integer('quantityFull');
             $table->integer('Price');
-            $table->integer('offeredPrice')->nullable();
             $table->integer('Discount');
             $table->timestamps();
         });
