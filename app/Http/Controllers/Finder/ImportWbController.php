@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Finder;
 
 use App\Http\Controllers\Controller;
 use App\Models\Stock;
+use App\Models\Store;
 use App\Services\Contracts\ImportServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -17,14 +18,16 @@ class ImportWbController extends Controller
     {
     }
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request, $storeId): JsonResponse
     {
         $validated = Validator::make($request->all(), [
             'dateFrom' => ['required', 'date_format:Y-m-d'],
         ]);
 
-        if(!$validated->fails()) {
-            $this->importService->handle($validated->getData()['dateFrom']);
+        $store = Store::query()->find($storeId);
+
+        if(!$validated->fails() && $store) {
+            $this->importService->handle($validated->getData()['dateFrom'], $store);
         } else {
             return response()->json(['messages' => $validated->errors()->getMessages()]);
         }

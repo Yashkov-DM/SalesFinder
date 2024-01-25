@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Store;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            ConditionSeeder::class,
+            ExpressionSeeder::class,
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        Store::query()->create([
+            'name' => 'FirstStore',
+            'apiToken' => 'eyJhbGciOiJFUzI1NiIsImtpZCI6IjIwMjMxMjI1djEiLCJ0eXAiOiJKV1QifQ.eyJlbnQiOjEsImV4cCI6MTcyMTI1MjYzMCwiaWQiOiJkYmI4ZjE5YS1lMDg2LTQ3MzMtOTE0Ny1mYWU2NmM1OTM1NTgiLCJpaWQiOjE4NDA0MzIxLCJvaWQiOjc2MjUzLCJzIjozMiwic2lkIjoiZjYwMDVkNTYtZjAyMC01MmVhLTk0NjUtNWRiYTExZjEyYmE3IiwidCI6ZmFsc2UsInVpZCI6MTg0MDQzMjF9.0hSdZ7939Wbv6Tu6UuDYvkLZUxsqKf8r9-ctP_UYvFm3YnyrSsQm4goAQk1SD3pOzT86N_F8jvF4ioe-UB9rfQ',
+        ]);
     }
 }

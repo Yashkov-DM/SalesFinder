@@ -13,14 +13,17 @@ return new class extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('storeId')->nullable()->constrained('stores')->nullOnDelete();
+            $table->foreignId('groupCalcPriseId')->nullable()->constrained('group_calculate_prices')->nullOnDelete();
             $table->integer('nmId');
             $table->string('supplierArticle');
             $table->string('warehouseName');
             $table->string('category');
             $table->string('subject');
             $table->integer('quantityFull');
-            $table->integer('Price');
-            $table->integer('Discount');
+            $table->integer('price');
+            $table->integer('offerPrice')->nullable();
+            $table->integer('discount');
             $table->timestamps();
         });
     }
